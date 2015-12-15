@@ -55,14 +55,11 @@ def update_chance(success, chance, max_chance):
         0: 1,
         1: -1
     }
-
-    print(switcher[success])
     chance -= switcher[success]
     if chance < 0:
         chance = 0
     elif chance > max_chance:
         chance = max_chance
-    print("chances", chance)
     return chance
 
 
@@ -71,9 +68,7 @@ def update_board(g_row, g_col, success, board):
         0: 'X',
         1: '+'
     }
-
     board[g_row][g_col] = switcher[success]
-
     return board
 
 
@@ -105,11 +100,14 @@ while chance >= 0:
     if chance > 0:
         print_board(board)
         print("Turn: ", turn)
+        print("Chances", chance)
 
-        guess_row = int(input("Guess Row:"))
-        guess_col = int(input("Guess Col:"))
+        guess_row = input("Guess Row:")
+        guess_col = input("Guess Col:")
 
         if guess_col != "" and guess_row != "":
+            guess_row = int(guess_row)
+            guess_col = int(guess_col)
             success = check_atack(guess_row, guess_col, machine_ships, battlefieldSize, board)
 
             if success != -1:
@@ -117,5 +115,5 @@ while chance >= 0:
                 chance = update_chance(success, chance, maxChance)
                 board = update_board(guess_row, guess_col, success, board)
     else:
-        print("Game Over")
+        print("--------------------\nGame Over\n--------------------")
         break
